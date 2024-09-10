@@ -1,0 +1,232 @@
+//
+// Created by marko on 20.4.22..
+// modified by teodora 2024
+//
+
+#ifndef OS1_VEZBE07_RISCV_CONTEXT_SWITCH_2_INTERRUPT_SCHEDULER_HPP
+#define OS1_VEZBE07_RISCV_CONTEXT_SWITCH_2_INTERRUPT_SCHEDULER_HPP
+
+class TCB;
+
+struct Node{
+    TCB* tcb;
+    Node* next;
+    Node():tcb(nullptr),next(nullptr){}
+};
+class Scheduler {
+
+private:
+
+    static Node* readyThreadQueueFirst;
+    static Node* readyThreadQueueLast;
+
+    Scheduler() {}
+    ~Scheduler();
+    Scheduler(const Scheduler&) = delete;
+    Scheduler& operator=(const Scheduler&) = delete;
+
+
+public:
+
+    static Scheduler& getInstance() {
+        static Scheduler instance;
+        return instance;
+    }
+
+    static bool isEmpty() {
+        return readyThreadQueueFirst == nullptr;
+    }
+
+    static TCB *idle;
+
+    static TCB *get();
+
+    static void put(TCB *tcb);
+
+    static void empty();
+
+    static void idleFunc(void * arg);
+
+};
+
+#endif //OS1_VEZBE07_RISCV_CONTEXT_SWITCH_2_INTERRUPT_SCHEDULER_HPP
+//
+// Created by marko on 20.4.22..
+// modified by teodora 2024
+//
+#include "../h/scheduler.hpp"
+#include "../h/tcb.hpp"
+#include "../test/printing.hpp"
+#include "../h/print.hpp"
+
+TCB *Scheduler::idle = nullptr;
+Node *Scheduler::readyThreadQueueFirst = nullptr;
+Node *Scheduler::readyThreadQueueLast = nullptr;
+
+TCB *Scheduler::get() {
+    printString("uzimam\n");
+    Node* n=readyThreadQueueFirst;
+    while(n!= nullptr){
+        printString("red ima\n");
+        printRegister((uint64)n->tcb);
+        n=n->next;
+    }
+    TCB *ret = idle;
+    Node *old;
+    if (readyThreadQueueFirst != nullptr) {
+        old = readyThreadQueueFirst;
+        ret = readyThreadQueueFirst->tcb;
+        readyThreadQueueFirst = readyThreadQueueFirst->next;
+
+        if (readyThreadQueueFirst == nullptr)readyThreadQueueLast = nullptr;
+        old->next= nullptr;
+        old->tcb= nullptr;
+        delete old;
+    }
+
+    printString("a sad\n");
+    n=readyThreadQueueFirst;
+    while(n!= nullptr){
+        printString("red ima\n");
+        printRegister((uint64)n->tcb);
+        n=n->next;
+    }
+    return ret;
+
+}
+
+void Scheduler::put(TCB *tcb) {
+    printString("stavljam\n");
+    printRegister((uint64)tcb);
+    printString("imam\n");
+    Node* n=readyThreadQueueFirst;
+    while(n!= nullptr){
+        printString("red ima\n");
+        printRegister((uint64)n->tcb);
+        n=n->next;
+    }
+    if (tcb != idle && tcb != nullptr && !tcb->isFinished()) {
+
+        Node* newNode = new Node();
+        newNode->tcb=tcb;
+        if (readyThreadQueueFirst == nullptr) {
+            readyThreadQueueFirst = newNode;
+            readyThreadQueueLast = readyThreadQueueFirst;
+         } else {
+            readyThreadQueueLast->next =  newNode;
+            readyThreadQueueLast= readyThreadQueueLast->next;
+        }
+    }
+
+    n=readyThreadQueueFirst;
+    while(n!= nullptr){
+        printString("red ima\n");
+        printRegister((uint64)n->tcb);
+        n=n->next;
+    }
+}
+Scheduler::~Scheduler() {
+    empty();
+}
+void Scheduler::empty() {
+    while(!isEmpty())Scheduler::get();
+    delete idle;
+}
+void Scheduler::idleFunc(void *arg) {
+    while (1);
+}
+
+
+//
+// Created by os on 8/27/24.
+//
+#include "../h/sem.h"
+#include "../h/tcb.hpp"
+
+Sem::Sem(unsigned init) {
+    val = init;
+    on = true;
+    blockedFirst= nullptr;
+    blockedLast= nullptr;
+}
+
+Sem::~Sem() {
+    close();
+}
+
+Sem *Sem::open(unsigned i) {
+    Sem *s = new Sem(i);
+    return s;
+}
+
+int Sem::wait() {
+    if (!on) {
+        return -1;
+    }
+
+    if (--val < 0) {
+        NodeS *n = new NodeS(TCB::running);
+        if (blockedFirst != nullptr) {
+            blockedLast->next = n;
+            blockedLast = blockedLast->next;
+        } else {
+            blockedFirst = blockedLast = n;
+        }
+        //TCB::wait();
+    }
+    if (!on) {
+        return -1;
+    } // vidi kkao da javi close waitu da je ugasen sem
+    return 0;
+}
+
+int Sem::signal() {
+    if (!on) {
+        return -1;
+    }
+
+    if (++val <= 0) {
+        if (blockedLast == blockedFirst && blockedFirst != nullptr) {
+            NodeS *n = blockedFirst;
+            blockedFirst = blockedLast = nullptr;
+            n->curr->release();
+            n->curr = nullptr;
+            n->next = nullptr;
+            delete n;
+        }
+        if (blockedFirst != nullptr) {
+            NodeS *n = blockedFirst;
+            blockedFirst = blockedFirst->next;
+            n->curr->release();
+            n->curr = nullptr;
+            n->next = nullptr;
+            delete n;
+        }
+    }
+    return 0;
+}
+
+int Sem::close() {
+    if (!on) {
+        return -1;
+    }
+
+    while (blockedFirst != nullptr) {
+        NodeS *n = blockedFirst;
+        TCB *tcb = n->curr;
+        tcb->release();
+        n->curr = nullptr;
+        blockedFirst = blockedFirst->next;
+        if (blockedFirst == nullptr) {
+            blockedLast = blockedFirst;
+        }
+
+        delete n;
+    }
+
+    on = false;
+    val = 0;
+
+    return 0;
+}
+
