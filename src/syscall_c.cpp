@@ -38,7 +38,7 @@ int mem_free(void *ptr) {
 int thread_create(thread_t *handle, void(*start_routine)(void *), void *arg) {
     if (!handle) { return 0; }
 
-    uint64 * stack;
+    uint64 *stack;
     if (start_routine != nullptr)
         stack = new uint64[TCB::getSTACK_SIZE()];
         // (uint64 *)mem_alloc(TCB::getSTACK_SIZE()* sizeof(uint64));//
@@ -83,7 +83,7 @@ int sem_open(sem_t *handle, unsigned init) {
     abi_invoke();
 
     uint64 volatile ret = Riscv::r_a0();
-  //  printStr("Kreiran sem\n");
+    //  printStr("Kreiran sem\n");
 
     return (int) ret;
 }
@@ -97,7 +97,7 @@ int sem_close(sem_t handle) {
     abi_invoke();
 
     uint64 volatile ret = Riscv::r_a0();
-   // printStr("Zatvoren sem\n");
+    // printStr("Zatvoren sem\n");
     return (int) ret;
 }
 
@@ -124,7 +124,7 @@ int sem_signal(sem_t id) {
     abi_invoke();
 
     uint64 volatile ret = Riscv::r_a0();
- //   printStr("signal sem\n");
+    //   printStr("signal sem\n");
     return (int) ret;
 }
 
@@ -134,7 +134,6 @@ void changeSysRegime() {
 
     abi_invoke();
 }
-
 
 void putc(char c) {
     Riscv::w_a1((uint64) c);
@@ -153,12 +152,19 @@ char getc() {
 }
 
 
+
+
+
+
+
 int sem_trywait(sem_t id) {
     return 0;
 }
+
 int time_sleep(time_t) {
     return 0;
 }
+
 int sem_timedwait(
         sem_t id,
         time_t timeout

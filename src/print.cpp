@@ -53,11 +53,9 @@ void printUint64Hex(uint64 num) {
         num >>= 4;
     }
 
-
     while (index >= 0) {
         buffer[index--] = '0';
     }
-
 
     for (index = 0; index < HEX_DIGITS; ++index) {
         putc(buffer[index]);

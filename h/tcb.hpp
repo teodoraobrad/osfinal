@@ -14,7 +14,6 @@ enum State {
     CREATED = 0, RUNNING = 1, BLOCKED = 3, SLEEPING = 4, FINISHED = 5, READY = 6
 };
 
-// Thread Control Block
 class TCB {
 public:
     ~TCB() {
@@ -22,13 +21,16 @@ public:
         delete[] stack;
     }
 
-    bool isFinished() { return currentThreadState==State::FINISHED; }
+    bool isFinished() { return currentThreadState == State::FINISHED; }
 
-    void setFinished() { currentThreadState=State::FINISHED;
+    void setFinished() {
+        currentThreadState = State::FINISHED;
         // finished = value;
     }
 
-    void setState(State e) { currentThreadState=e;}
+    using Body = void (*)(void *);
+
+    void setState(State e) { currentThreadState = e; }
 
     uint64 getTimeSlice() const { return timeSlice; }
 
@@ -38,17 +40,14 @@ public:
 
     static uint64 getSTACK_SIZE() { return STACK_SIZE; }
 
-    using Body = void (*)(void *);
-
     static TCB *createThread(Body body, void *arg, void *stack);
 
     static void yield();
 
-    static TCB *running;
-    static TCB *maintcb;
-
     void release();
 
+    static TCB *running;
+    static TCB *maintcb;
 
 private:
 
@@ -61,12 +60,12 @@ private:
                 stack != nullptr ? (uint64) &stack[STACK_SIZE] : 0
         };
         this->timeSlice = timeSlice;
-        //this->finished = false;
-        this->next= nullptr;
-        this->nextBlocked= nullptr;
-        this->holder= nullptr;
+        this->next = nullptr;
+        this->nextBlocked = nullptr;
+        this->holder = nullptr;
         id = globalId++;
         sysRegime = false;
+        //this->finished = false;
         currentThreadState = State::CREATED;
         if (body == nullptr) { currentThreadState = State::RUNNING; }
         if (body != nullptr && body != &Scheduler::idleFunc) { Scheduler::put(this); }
@@ -83,9 +82,9 @@ private:
     void *arg;
     bool sysRegime;
 
-    TCB* next;
-    TCB* nextBlocked;
-    Sem* holder;
+    TCB *next;
+    TCB *nextBlocked;
+    Sem *holder;
 
     Body body;
     uint64 *stack;
@@ -94,7 +93,9 @@ private:
     //bool finished;
 
     friend class Riscv;
+
     friend class Scheduler;
+
     friend class Sem;
 
     static void threadWrapper();

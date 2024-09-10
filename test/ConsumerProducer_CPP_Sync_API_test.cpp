@@ -30,7 +30,7 @@ void ProducerKeyboard::producerKeyboard(void *arg) {
     int i = 0;
     while ((key = getc()) != 0x30) {
         data->buffer->put(key);
-        printString("\n");
+        //printString("\n");
         i++;
 
         if (i % (10 * data->id) == 0) {

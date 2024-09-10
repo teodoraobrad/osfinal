@@ -59,7 +59,7 @@ public:
     }
 
     inline static size_t alignToPrevious(size_t addr, size_t to) {
-        return (size_t) (((addr ) / to) * to);
+        return (size_t) (((addr) / to) * to);
 
     }
 
@@ -80,7 +80,7 @@ public:
 
     static void print_blk(MemoryBlock *blk);
 
-    static void print_allocator() ;
+    static void print_allocator();
 };
 
 

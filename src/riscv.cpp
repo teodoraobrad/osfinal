@@ -51,7 +51,6 @@ void Riscv::handleSupervisorTrap() {
                     a0arg = (uint64) __mem_alloc(a1reg); //SKLONI MEM.H
 
                     Riscv::w_a0(a0arg);
-
                 }
                     break;
                 case MEM_FREE: {
@@ -91,11 +90,10 @@ void Riscv::handleSupervisorTrap() {
                 case SEM_OPEN: {
                     unsigned volatile a2reg = (unsigned) r_a2fromstack();
                     uint64 volatile a1reg = (uint64) r_a1fromstack();
-                   // printRegister((uint64)a1reg);
-                    //printRegister((uint64)a2reg);
+
                     (*(Sem **) a1reg) = Sem::open((unsigned )a2reg);
                     w_a1onstack(a1reg);
-                    //printRegister((uint64)a1reg);
+
                     if (a1reg != 0)a0arg = 0; else a0arg = -1;
                     w_a0(a0arg);
                 }
@@ -107,7 +105,6 @@ void Riscv::handleSupervisorTrap() {
                     uint64 retCast = (uint64) s->close();
 
                     Riscv::w_a0(retCast);
-
                 }
                     break;
                 case SEM_WAIT: {
@@ -123,7 +120,6 @@ void Riscv::handleSupervisorTrap() {
                 case SEM_SIGNAL: {
                     uint64 volatile a1reg = r_a1fromstack();
 
-                    // uint64 retCast = (uint64) MemoryAllocator::mem_free((void *) a1reg);
                     Sem *s = (Sem *) a1reg;
                     uint64 retCast = (uint64) s->signal();
 

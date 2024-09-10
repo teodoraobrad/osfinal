@@ -9,7 +9,6 @@
 #include "../h/syscall_cpp.hpp"
 //#include "../h/MemoryAllocator.hpp"
 
-
 int main() {
 
     //MemoryAllocator::initialize();
@@ -25,36 +24,6 @@ int main() {
 
     printString("\nstart ok\n");
 
-/*
-    TCB *handle;
-    void* argument;
-    void* argument2;
-    int result = thread_create(&handle, workerBodyD, &argument);
-    if (result == 0) {
-        printString("ok1");
-    } else {
-        printString("oh no");
-    }
-    TCB *handle1;
-    int result1 = thread_create(&handle1, workerBodyC, &argument2);
-    if (result1 == 0) {
-        printString("ok2");
-    } else {
-        printString("oh no");
-    }
-    printInt(handle->isFinished());
-    printInt(handle1->isFinished());
-
-    printString("\nkrecemo\n");
-    thread_dispatch();
-    printRegister(handle->isFinished());
-    printRegister(handle1->isFinished());
-    while(!(handle->isFinished()&&handle1->isFinished())){
-        thread_dispatch();
-        printString("disp");
-    }
-*/
-
     Semaphore *sem = new Semaphore(0);
 
     Thread *userT = new Thread(userFunc, sem);
@@ -66,11 +35,10 @@ int main() {
     printString("main ce da ceka\n");
     sem->wait();
 
-
+    //Riscv::mc_sstatus(Riscv::SSTATUS_SIE);
     printString("ciscenje za kraj\n");
-    //Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    Scheduler::empty();
+    Scheduler::cleanUp();
     delete userT;
     delete TCB::maintcb;
 

@@ -20,14 +20,16 @@ void Scheduler::idleFunc(void *arg) {
 
 TCB *Scheduler::get() {
 
-  /*  printString("uzimam\n");
-    TCB *n = first;
-    while (n != nullptr) {
-        printRegister((uint64) n);
-        n = n->next;
-    }
-    printString("to je to\n");
- */   if (first == nullptr) {
+    /*  printString("uzimam\n");
+      TCB *n = first;
+      while (n != nullptr) {
+          printRegister((uint64) n);
+          n = n->next;
+      }
+      printString("to je to\n");
+      */
+
+    if (first == nullptr) {
         return idle;
     }
 
@@ -65,6 +67,7 @@ void Scheduler::put(TCB *tcb) {
     printString("to je to\n");
 */
     if (tcb == idle || tcb == nullptr)return;
+
     tcb->next = nullptr;
     if (first == nullptr) {
         first = last = tcb;
@@ -72,21 +75,21 @@ void Scheduler::put(TCB *tcb) {
         last = last->next = tcb;
     }
 
- /*   n = first;
-    printString("red ima\n");
-    while (n != nullptr) {
+    /*   n = first;
+       printString("red ima\n");
+       while (n != nullptr) {
 
-        printRegister((uint64) n);
-        n = n->next;
-    }
-    printString("to je to\n");
-*/
+           printRegister((uint64) n);
+           n = n->next;
+       }
+       printString("to je to\n");
+   */
 }
 
 void Scheduler::remove(TCB *t) {
     TCB *f = first;
     TCB *prev = nullptr;
-    while (f != nullptr && f != last) {
+    while (f != nullptr) {//&& f != last
         if (f == t) {
             if (prev != nullptr)prev->next = f->next;
             f->next = nullptr;
@@ -98,13 +101,21 @@ void Scheduler::remove(TCB *t) {
 }
 
 Scheduler::~Scheduler() {
-    empty();
+    cleanUp();
+    delete idle;
 }
 
 void Scheduler::empty() {
-    while (!isEmpty()){
-        TCB* temp=Scheduler::get();
+    while (!isEmpty()) {
+        Scheduler::get();
+    }
+
+}
+
+void Scheduler::cleanUp() {
+    while (!isEmpty()) {
+        TCB *temp = Scheduler::get();
         delete temp;
     }
-    delete idle;
+
 }

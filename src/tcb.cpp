@@ -27,7 +27,7 @@ void TCB::yield() {
         if(old!=Scheduler::idle)old->currentThreadState=State::READY;
         Scheduler::put(old); }
     running = Scheduler::get();
-    running->currentThreadState=State::RUNNING;
+    running->setState(State::RUNNING);
 
     TCB::contextSwitch(&old->context, &running->context);
 }
@@ -43,7 +43,7 @@ void TCB::threadWrapper() {
 }
 
 void TCB::release(){
-    this->currentThreadState=State::READY;
+    this->setState(State::READY);
     holder= nullptr;
     nextBlocked= nullptr;
     Scheduler::put(this);

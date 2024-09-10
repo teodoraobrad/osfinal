@@ -165,11 +165,11 @@ inline uint64 Riscv::r_a0() {
 inline uint64 Riscv::r_a0fromstack() {
     uint64 a0;
     __asm__ volatile (
-    "ld %0, 80(fp)"
-    : "=r" (a0)
-    :
-    :
-    );
+            "ld %0, 80(fp)"
+            : "=r" (a0)
+            :
+            :
+            );
     return a0;
 }
 
@@ -190,11 +190,11 @@ inline uint64 Riscv::r_a1() {
 inline uint64 Riscv::r_a1fromstack() {
     uint64 a1;
     __asm__ volatile (
-    "ld %0, 88(fp)"
-    : "=r" (a1)
-    :
-    :
-    );
+            "ld %0, 88(fp)"
+            : "=r" (a1)
+            :
+            :
+            );
     return a1;
 }
 
@@ -215,11 +215,11 @@ inline uint64 Riscv::r_a2() {
 inline uint64 Riscv::r_a2fromstack() {
     uint64 a2;
     __asm__ volatile (
-    "ld %0, 96(fp)"
-    : "=r" (a2)
-    :
-    :
-    );
+            "ld %0, 96(fp)"
+            : "=r" (a2)
+            :
+            :
+            );
     return a2;
 }
 
@@ -240,11 +240,11 @@ inline uint64 Riscv::r_a3() {
 inline uint64 Riscv::r_a3fromstack() {
     uint64 a3;
     __asm__ volatile (
-    "ld %0, 104(fp)"
-    : "=r" (a3)
-    :
-    :
-    );
+            "ld %0, 104(fp)"
+            : "=r" (a3)
+            :
+            :
+            );
     return a3;
 }
 
@@ -265,11 +265,11 @@ inline uint64 Riscv::r_a4() {
 inline uint64 Riscv::r_a4fromstack() {
     uint64 a4;
     __asm__ volatile (
-    "ld %0, 112(fp)"
-    : "=r" (a4)
-    :
-    :
-    );
+            "ld %0, 112(fp)"
+            : "=r" (a4)
+            :
+            :
+            );
     return a4;
 }
 

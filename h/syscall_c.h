@@ -19,6 +19,7 @@ const int EOF = -1;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 void abi_invoke();
 
 void changeSysRegime();
@@ -48,6 +49,7 @@ int time_sleep(time_t); //0x31
 
 char getc(); //0x41
 void putc(char); //0x42
+
 #ifdef __cplusplus
 }
 #endif

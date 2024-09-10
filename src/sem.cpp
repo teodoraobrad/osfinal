@@ -1,11 +1,11 @@
 //
-// Created by os on 8/27/24.
+// Created by teodora on 8/27/24.
 //
 #include "../h/sem.h"
 #include "../h/tcb.hpp"
 #include "../test/printing.hpp"
 
-Sem::Sem(unsigned init) {
+Sem::Sem(unsigned int init) {//
     val = init;
     on = true;
     blockedFirst= nullptr;
@@ -16,7 +16,7 @@ Sem::~Sem() {
     close();
 }
 
-Sem *Sem::open(unsigned i) {
+Sem *Sem::open(unsigned i) {//
     Sem *s = new Sem(i);
     return s;
 }

@@ -6,11 +6,12 @@
 #define OSFINAL_USERMAIN_H
 
 #include "syscall_cpp.hpp"
+
 extern void userMain();
 
-void userFunc(void* a) {
+void userFunc(void *a) {
 
-    Semaphore* sem=(Semaphore *) a;
+    Semaphore *sem = (Semaphore *) a;
     userMain();
     sem->signal();
 }

@@ -8,16 +8,18 @@
 
 class TCB;
 
-class Scheduler{
+class Scheduler {
 
 private:
     static TCB *first;
     static TCB *last;
 
     Scheduler() {}
+
     ~Scheduler();
 
     Scheduler(const Scheduler &) = delete;
+
     Scheduler &operator=(const Scheduler &) = delete;
 
 public:
@@ -31,11 +33,17 @@ public:
     }
 
     static TCB *get();
+
     static void put(TCB *);
+
     static void remove(TCB *);
+
     static void empty();
 
+    static void cleanUp();
+
     static TCB *idle;
+
     static void idleFunc(void *arg);
 };
 

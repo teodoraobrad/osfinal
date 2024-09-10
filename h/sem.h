@@ -13,13 +13,14 @@ struct NodeS {
 };
 */
 class TCB;
+
 class Sem {
 public:
-    explicit Sem(unsigned init = 1);
+    explicit Sem(unsigned int init = 1);//
 
     ~Sem();
 
-    static Sem *open(unsigned i);
+    static Sem *open(unsigned int i);//
 
     int wait();
 
@@ -28,13 +29,14 @@ public:
     int close();
 
     int value() { return val; }
+
     bool isOn() { return on; };
 
 private:
     //NodeS *blockedFirst, *blockedLast;
     TCB *blockedFirst, *blockedLast;
     bool on;
-    int val;
+    int val; //signed by def
 
 };
 
