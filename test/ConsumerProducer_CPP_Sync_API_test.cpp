@@ -1,7 +1,7 @@
 #include "../h/syscall_cpp.hpp"
 
 #include "buffer_CPP_API.hpp"
-#include "printing.hpp"
+
 static Semaphore* waitForAll;
 
 struct thread_data {
@@ -30,7 +30,6 @@ void ProducerKeyboard::producerKeyboard(void *arg) {
     int i = 0;
     while ((key = getc()) != 0x30) {
         data->buffer->put(key);
-        //printString("\n");
         i++;
 
         if (i % (10 * data->id) == 0) {
@@ -62,7 +61,7 @@ void ProducerSync::producer(void *arg) {
     while (!threadEnd) {
         data->buffer->put(data->id + '0');
         i++;
-        printString("\n");
+
         if (i % (10 * data->id) == 0) {
             Thread::dispatch();
         }

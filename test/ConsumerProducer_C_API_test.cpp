@@ -57,7 +57,6 @@ static void consumer(void *arg) {
         int key = data->buffer->get();
         i++;
 
-        putc('c');
         putc(key);
 
         if (i % (5 * data->id) == 0) {
