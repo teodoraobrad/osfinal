@@ -1,6 +1,7 @@
 #include "printing.hpp"
+#include "../h/mod.hpp"
 
-#define LEVEL_1_IMPLEMENTED 0
+#define LEVEL_1_IMPLEMENTED 1
 #define LEVEL_2_IMPLEMENTED 1
 #define LEVEL_3_IMPLEMENTED 1
 #define LEVEL_4_IMPLEMENTED 1
@@ -99,6 +100,13 @@ void userMain() {
             printString("Test se nije uspesno zavrsio\n");
             printString("TEST 7 (zadatak 2., testiranje da li se korisnicki kod izvrsava u korisnickom rezimu)\n");
 #endif
+            break;
+        case 8:
+
+            modifikacija();
+            printString("Modifikacija uspesno zavrsena\n");
+            printString("TEST 8 (modifikacija)\n");
+
             break;
         default:
             printString("Niste uneli odgovarajuci broj za test\n");

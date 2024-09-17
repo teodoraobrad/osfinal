@@ -56,7 +56,7 @@ void Riscv::handleSupervisorTrap() {
                 case MEM_FREE: {
                     uint64 volatile a1reg = r_a1fromstack();
 
-                    // uint64 retCast = (uint64) MemoryAllocator::mem_free((void *) a1reg);
+                    //uint64 retCast = (uint64) MemoryAllocator::mem_free((void *) a1reg);
                     uint64 retCast = (uint64) __mem_free((void *) a1reg);
 
                     Riscv::w_a0(retCast);
@@ -211,10 +211,12 @@ void Riscv::handleSupervisorTrap() {
 }
 
 void Riscv::terminateRiscv() {
-    __asm__ volatile (
+
+    *(int*)0x100000 = 0x5555;
+    /*__asm__ volatile (
     "lui t0, 0x10000\n"
     "addi t0, t0, 0x0000\n"
     "li t1, 0x5555\n"
     "sw t1, 0(t0)\n"
-    );
+    );*/
 }

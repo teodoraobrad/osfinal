@@ -44,5 +44,7 @@ int main() {
 
     printString("main() finished\n");
 
+    Riscv::terminateRiscv();
+
     return 0;
 }

@@ -19,6 +19,9 @@ public:
     ~TCB() {
         Scheduler::remove(this);
         delete[] stack;
+        nextBlocked= nullptr;
+        next= nullptr;
+        holder= nullptr;
     }
 
     bool isFinished() { return currentThreadState == State::FINISHED; }
