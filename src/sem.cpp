@@ -5,7 +5,7 @@
 #include "../h/tcb.hpp"
 #include "../test/printing.hpp"
 
-Sem::Sem(unsigned int init) {//
+Sem::Sem(uint64 init) {//unsigned int
     val = init;
     on = true;
     blockedFirst= nullptr;
@@ -16,7 +16,7 @@ Sem::~Sem() {
     close();
 }
 
-Sem *Sem::open(unsigned i) {//
+Sem* Sem::open(uint64 i) {//unsigned
     Sem *s = new Sem(i);
     return s;
 }
@@ -88,5 +88,16 @@ int Sem::close() {
     val = 0;
 
     return 0;
+}
+
+int Sem::trywait() {
+    if(!on) return -1;
+
+    if(val>0){
+        val--;
+        return 0;
+    }
+    val--;//?
+    return 1;
 }
 

@@ -4,6 +4,7 @@
 #ifndef OS2024V6_SEM_H
 #define OS2024V6_SEM_H
 
+#include "../lib/hw.h"
 /*
 struct NodeS {
     TCB *curr;
@@ -16,13 +17,15 @@ class TCB;
 
 class Sem {
 public:
-    explicit Sem(unsigned int init = 1);//
+    explicit Sem(uint64 init = 1);//unsigned int
 
     ~Sem();
 
-    static Sem *open(unsigned int i);//
+    static Sem *open(uint64 i);//unsigned int
 
     int wait();
+
+    int trywait();
 
     int signal();
 

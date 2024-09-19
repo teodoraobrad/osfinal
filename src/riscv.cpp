@@ -131,6 +131,11 @@ void Riscv::handleSupervisorTrap() {
                 }
                     break;
                 case SEM_TRYDWAIT: {
+                    uint64 volatile a1reg = r_a1fromstack();
+
+                    uint64 retCast = (uint64) ((Sem *) a1reg)->trywait();
+
+                    Riscv::w_a0(retCast);
 
                 }
                     break;

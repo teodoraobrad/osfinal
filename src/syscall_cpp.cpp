@@ -25,7 +25,7 @@ void operator delete[](void *p) noexcept {
     mem_free(p);
 }
 
-Thread::Thread() : myHandle(nullptr), body(nullptr), arg(nullptr) {}
+Thread::Thread() : myHandle(nullptr), body(nullptr), arg(nullptr) {} // ili stavi za body runwrap svakako a arg da bude this
 
 Thread::Thread(void (*body)(void *)) : myHandle(nullptr), body(body), arg(nullptr) {}
 
@@ -66,6 +66,10 @@ int Semaphore::signal() {
     return sem_signal(myHandle);
 }
 
+int Semaphore::tryWait() {
+    return sem_trywait(myHandle);
+}
+
 
 
 
@@ -74,10 +78,6 @@ int Thread::sleep(time_t time){ return time_sleep(time); }
 
 int Semaphore::timedWait(time_t t) {
     return sem_timedwait(myHandle, t);
-}
-
-int Semaphore::tryWait() {
-    return sem_trywait(myHandle);
 }
 
 char Console::getc(){

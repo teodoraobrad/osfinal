@@ -128,6 +128,20 @@ int sem_signal(sem_t id) {
     return (int) ret;
 }
 
+
+int sem_trywait(sem_t id) {
+    if (!id) { return 0; }
+
+    Riscv::w_a1((uint64) id);
+    Riscv::w_a0(SEM_TRYDWAIT);
+
+    abi_invoke();
+
+    uint64 volatile ret = Riscv::r_a0();
+
+    return (int) ret;
+}
+
 void changeSysRegime() {
 
     Riscv::w_a0(CHANGEREGIME);
@@ -157,9 +171,6 @@ char getc() {
 
 
 
-int sem_trywait(sem_t id) {
-    return 0;
-}
 
 int time_sleep(time_t) {
     return 0;

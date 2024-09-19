@@ -1,10 +1,10 @@
 #include "printing.hpp"
-#include "../h/mod.hpp"
 
 #define LEVEL_1_IMPLEMENTED 1
 #define LEVEL_2_IMPLEMENTED 1
 #define LEVEL_3_IMPLEMENTED 1
-#define LEVEL_4_IMPLEMENTED 1
+#define LEVEL_4_IMPLEMENTED 0
+#define MOD_IMPELENTED 1
 
 #if LEVEL_2_IMPLEMENTED == 1
 // TEST 1 (zadatak 2, niti C API i sinhrona promena konteksta)
@@ -28,7 +28,11 @@
 // TEST 6 (zadatak 4. CPP API i asinhrona promena konteksta)
 #include "../test/ConsumerProducer_CPP_API_test.hpp"
 #include "System_Mode_test.hpp"
+#endif
 
+#if MOD_IMPELENTED == 1
+// TEST 8 MODifikacija
+#include "../h/mod.hpp"
 #endif
 
 void userMain() {
@@ -56,6 +60,14 @@ void userMain() {
             return;
         }
     }
+
+    if (test == 8) {
+        if (MOD_IMPELENTED == 0) {
+            printString("Nije navedeno da je modifikacija za 20 implementirana\n");
+            return;
+        }
+    }
+
 
     switch (test) {
         case 1:
@@ -102,11 +114,11 @@ void userMain() {
 #endif
             break;
         case 8:
-
+#if MOD_IMPELENTED == 1
             modifikacija();
             printString("Modifikacija uspesno zavrsena\n");
             printString("TEST 8 (modifikacija)\n");
-
+#endif
             break;
         default:
             printString("Niste uneli odgovarajuci broj za test\n");
