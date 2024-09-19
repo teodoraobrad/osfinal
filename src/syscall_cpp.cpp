@@ -50,7 +50,7 @@ void Thread::dispatch() {
     thread_dispatch();
 }
 
-Semaphore::Semaphore(unsigned init) : val(init) {
+Semaphore::Semaphore(unsigned init)  {
     sem_open(&myHandle, init);
 }
 

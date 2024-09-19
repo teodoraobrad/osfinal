@@ -13,7 +13,7 @@
 #include "../h/print.hpp"
 #include "../test/printing.hpp"
 
-//#include "../h/MemoryAllocator.hpp"//SKLONI MEM.H
+#include "../h/MemoryAllocator.hpp"//SKLONI MEM.H
 
 void Riscv::popSppSpie() {
 
@@ -159,6 +159,15 @@ void Riscv::handleSupervisorTrap() {
                     TCB::running->sysRegime=true;
                 }
                     break;
+                case MODIFIKACIJA: {
+
+
+
+
+
+
+                }
+                    break;
 
                 default: {
                     printString("Prosledjen code za syscall koji nije na listi za obradu.\n");
@@ -208,6 +217,8 @@ void Riscv::handleSupervisorTrap() {
             uint64 sepc = r_sepc();
             printString("sepc: ");
             printRegister(sepc);
+
+            Riscv::terminateRiscv();
 
         }
             break;

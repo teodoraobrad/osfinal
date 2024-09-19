@@ -17,11 +17,11 @@ class TCB;
 
 class Sem {
 public:
-    explicit Sem(uint64 init = 1);//unsigned int
+    explicit Sem(unsigned init = 1);
 
     ~Sem();
 
-    static Sem *open(uint64 i);//unsigned int
+    static Sem *open(unsigned i);
 
     int wait();
 
@@ -35,11 +35,14 @@ public:
 
     bool isOn() { return on; };
 
+    int getNumOfBlocked();
+
+    int getNumOfBlockedVal();
 private:
     //NodeS *blockedFirst, *blockedLast;
     TCB *blockedFirst, *blockedLast;
     bool on;
-    int val; //signed by def
+    int val;
 
 };
 

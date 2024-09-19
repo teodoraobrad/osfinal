@@ -37,7 +37,7 @@ int sem_wait(sem_t id); //0x23
 int sem_signal(sem_t id); //0x24
 int sem_trywait(sem_t id);//0x26
 
-
+void modifikacijaFunk();//0x08
 
 
 int sem_timedwait(

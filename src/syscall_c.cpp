@@ -166,7 +166,12 @@ char getc() {
 }
 
 
+void modifikacijaFunk() {
 
+    Riscv::w_a0(MODIFIKACIJA);
+
+    abi_invoke();
+}
 
 
 

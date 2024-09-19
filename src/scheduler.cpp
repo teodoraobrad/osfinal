@@ -6,7 +6,6 @@
 #include "../h/scheduler.hpp"
 #include "../h/tcb.hpp"
 #include "../test/printing.hpp"
-#include "../h/print.hpp"
 
 TCB *Scheduler::idle = nullptr;
 TCB *Scheduler::last = nullptr;

@@ -41,6 +41,15 @@ public:
 
     void setId(int threadId) { id = threadId; }
 
+    Sem* semHolder() const { return holder; }
+
+    int getNumOfChildren() const { return children; }
+
+    void incNumOfCh() { children++; }
+    void decNumOfCh() { children--; }
+
+    TCB* getParent() const { return parent; }
+
     static uint64 getSTACK_SIZE() { return STACK_SIZE; }
 
     static TCB *createThread(Body body, void *arg, void *stack);
@@ -66,6 +75,11 @@ private:
         this->next = nullptr;
         this->nextBlocked = nullptr;
         this->holder = nullptr;
+        this->parent=TCB::running;
+        if(TCB::running!= nullptr&&body!= nullptr){
+            TCB::running->incNumOfCh();
+        }
+        this->children=0;
         id = globalId++;
         sysRegime = false;
         //this->finished = false;
@@ -88,6 +102,9 @@ private:
     TCB *next;
     TCB *nextBlocked;
     Sem *holder;
+    TCB *parent;
+
+    int children;
 
     Body body;
     uint64 *stack;

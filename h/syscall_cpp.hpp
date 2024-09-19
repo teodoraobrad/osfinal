@@ -63,7 +63,7 @@ public:
 
 private:
     sem_t myHandle;
-    unsigned int val;
+    //unsigned int val;
 };
 
 
