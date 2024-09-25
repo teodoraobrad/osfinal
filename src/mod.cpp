@@ -60,6 +60,7 @@ void modifikacija(){
         threadData[i].id = i;
         threadData[i].sem = waitForAll;
 
+
         niti[i] = new Nit(&threadData[i]);
         niti[i]->start();
 
