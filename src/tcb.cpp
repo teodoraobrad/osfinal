@@ -11,6 +11,8 @@
 TCB *TCB::running = nullptr;
 TCB *TCB::maintcb= nullptr;
 int TCB::globalId = 0;
+bool TCB::barinit= false;
+Barrier* TCB::b= nullptr;
 
 uint64 TCB::timeSliceCounter = 0;
 
@@ -47,4 +49,31 @@ void TCB::release(){
     holder= nullptr;
     nextBlocked= nullptr;
     Scheduler::put(this);
+}
+
+void TCB::barrier() {
+
+    if(!barinit){
+        b=new Barrier;
+        b->maxnum=3;
+        b->currnum=0;
+        b->mutex=new Sem(1);
+        b->door=new Sem(0);
+        barinit=1;
+    }
+
+    b->mutex->wait();
+
+    b->currnum++;
+    if(b->currnum==b->maxnum){
+
+        for (int i=0;i<b->maxnum;i++)
+            b->door->signal();
+
+        b->currnum=0;
+    }
+    b->mutex->signal();
+
+    b->door->wait();
+
 }

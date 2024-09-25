@@ -161,10 +161,7 @@ void Riscv::handleSupervisorTrap() {
                     break;
                 case MODIFIKACIJA: {
 
-
-
-
-
+                    TCB::barrier();
 
                 }
                     break;

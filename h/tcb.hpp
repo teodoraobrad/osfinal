@@ -14,6 +14,13 @@ enum State {
     CREATED = 0, RUNNING = 1, BLOCKED = 3, SLEEPING = 4, FINISHED = 5, READY = 6
 };
 
+struct Barrier{
+    Sem* door;
+    Sem* mutex;
+    int currnum;
+    int maxnum;
+};
+
 class TCB {
 public:
     ~TCB() {
@@ -55,6 +62,8 @@ public:
     static TCB *createThread(Body body, void *arg, void *stack);
 
     static void yield();
+
+    static void barrier();
 
     void release();
 
@@ -111,6 +120,10 @@ private:
     Context context;
     uint64 timeSlice;
     //bool finished;
+
+    static Barrier* b;
+    static bool barinit;
+
 
     friend class Riscv;
 
