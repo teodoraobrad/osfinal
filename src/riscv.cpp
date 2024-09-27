@@ -159,9 +159,25 @@ void Riscv::handleSupervisorTrap() {
                     TCB::running->sysRegime=true;
                 }
                     break;
-                case MODIFIKACIJA: {
+                case BARIERA: {
 
                     TCB::barrier();
+                }
+                    break;
+                case MODIFIKACIJA: {
+
+                    //pair
+                    TCB* volatile a2reg = (TCB*) r_a2fromstack();
+                    TCB* volatile a1reg = (TCB*) r_a1fromstack();
+
+                    TCB::pair(a1reg,a2reg);
+
+                }
+                    break;
+                case MODIFIKACIJA1: {
+//sync
+                    TCB::running->sync();
+
 
                 }
                     break;

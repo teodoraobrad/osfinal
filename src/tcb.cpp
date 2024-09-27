@@ -77,3 +77,26 @@ void TCB::barrier() {
     b->door->wait();
 
 }
+
+//sept mod
+void TCB::pair(TCB* t1, TCB* t2){
+    t1->setpar(t2);
+    t2->setpar(t1);
+
+}
+
+void TCB::sync(){
+    if(this->par->dosao==false){
+        dosao= true;
+        semPar->wait();
+    }else{
+        dosao=true;
+        this->par->semPar->signal();
+    }
+    dosao= false;
+}
+
+void TCB::setpar(TCB* a){
+    this->par=a;
+    this->semPar=new Sem(0);
+}

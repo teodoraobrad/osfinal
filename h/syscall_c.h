@@ -38,6 +38,9 @@ int sem_signal(sem_t id); //0x24
 int sem_trywait(sem_t id);//0x26
 
 void modifikacijaFunk();//0x08
+//modifikacija sept
+void pair(thread_t t1, thread_t t2);
+void sync();
 
 
 int sem_timedwait(

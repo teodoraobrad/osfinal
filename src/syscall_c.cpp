@@ -168,7 +168,23 @@ char getc() {
 
 void modifikacijaFunk() {
 
+    Riscv::w_a0(BARIERA);
+
+    abi_invoke();
+}
+//mod sept
+void pair(thread_t  t1, thread_t  t2){
+    if (!t1) { return ; }
+    if (!t2) { return ; }
+
+    Riscv::w_a2((uint64) t2);
+    Riscv::w_a1((uint64) t1);
     Riscv::w_a0(MODIFIKACIJA);
+
+    abi_invoke();
+}
+void sync(){
+    Riscv::w_a0(MODIFIKACIJA1);
 
     abi_invoke();
 }

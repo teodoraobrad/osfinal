@@ -32,7 +32,9 @@
 #define PUTC 0X42
 #define CHANGEREGIME 0X05
 
+#define BARIERA 0x07
 #define MODIFIKACIJA 0x08
+#define MODIFIKACIJA1 0x09
 
 #define CONSOLE 0xa
 

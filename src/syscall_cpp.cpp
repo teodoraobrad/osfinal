@@ -2,6 +2,7 @@
 // Created by teodora on 8/9/24.
 //
 #include "../h/syscall_cpp.hpp"
+
 //
 // Created by marko on 20.4.22..
 // modified by teodora 2024
@@ -71,6 +72,18 @@ int Semaphore::tryWait() {
     return sem_trywait(myHandle);
 }
 
+
+
+
+
+//modifikacija sept
+
+void Thread::pair(Thread* t1, Thread* t2){
+    ::pair(t1->myHandle,t2->myHandle);
+}
+void Thread::synchronize(){
+    sync();
+}
 
 
 

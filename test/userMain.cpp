@@ -116,8 +116,15 @@ void userMain() {
         case 8:
 #if MOD_IMPELENTED == 1
             modifikacija();
-            printString("Modifikacija uspesno zavrsena\n");
+            printString("Modifikacija sync uspesno zavrsena\n");
             printString("TEST 8 (modifikacija)\n");
+#endif
+            break;
+        case 9:
+#if MOD_IMPELENTED == 1
+            bariera();
+            printString("Modifikacija bariera uspesno zavrsena\n");
+            printString("TEST 9 (modifikacija)\n");
 #endif
             break;
         default:

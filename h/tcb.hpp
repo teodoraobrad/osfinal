@@ -65,10 +65,23 @@ public:
 
     static void barrier();
 
+    //mod sept
+    static void pair(TCB* t1, TCB* t2);
+    void sync();
+
     void release();
 
     static TCB *running;
     static TCB *maintcb;
+
+
+
+    //mod sept
+    TCB* par;
+    bool dosao;
+    Sem* semPar;
+
+    void setpar(TCB* a);
 
 private:
 
@@ -93,6 +106,11 @@ private:
         sysRegime = false;
         //this->finished = false;
         currentThreadState = State::CREATED;
+
+        this->par= nullptr;
+        this->dosao= false;
+        this->semPar= nullptr;
+
         if (body == nullptr) { currentThreadState = State::RUNNING; }
         if (body != nullptr && body != &Scheduler::idleFunc) { Scheduler::put(this); }
     }
@@ -123,6 +141,8 @@ private:
 
     static Barrier* b;
     static bool barinit;
+
+
 
 
     friend class Riscv;
