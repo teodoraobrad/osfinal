@@ -136,10 +136,9 @@ void modifikacija(){
     Thread *niti[threadNum];
     thread_data threadData[threadNum];
 
-    for (int i = 0; i < threadNum; i++) {
+    for (int i = 1; i < threadNum; i++) {
         threadData[i].id = i;
         threadData[i].sem = waitForAll;
-
 
         niti[i] = new Nit(&threadData[i]);
         niti[i]->start();
@@ -151,15 +150,14 @@ void modifikacija(){
     Thread::pair(niti[7],niti[8]);
     Thread::pair(niti[9],niti[10]);
 
-
     Thread::dispatch();
 
-    for (int i = 0; i < threadNum; i++) {
+    for (int i = 1; i < threadNum; i++) {
         waitForAll->wait();
     }
 
     delete waitForAll;
-    for (int i = 0; i < threadNum; i++) {
+    for (int i = 1; i < threadNum; i++) {
         delete niti[i];
     }
 
