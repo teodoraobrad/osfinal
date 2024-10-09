@@ -115,9 +115,10 @@ void TCB::join(TCB *handle) {
     }
 }*/
 void TCB::join(TCB* *handle) {
-    if((*handle)!= nullptr){
+    /*if((*handle)!= nullptr){
         while((*handle)->isFinished()!=true){
             TCB::yield();
         }
-    }
+    }*/
+    (*handle)->joinMe->wait();
 }

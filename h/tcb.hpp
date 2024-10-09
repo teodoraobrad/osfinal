@@ -111,6 +111,8 @@ private:
         this->dosao= false;
         this->semPar= nullptr;
 
+        this->joinMe=new Sem(0);
+
         if (body == nullptr) { currentThreadState = State::RUNNING; }
         if (body != nullptr && body != &Scheduler::idleFunc) { Scheduler::put(this); }
     }
@@ -146,6 +148,8 @@ private:
     //void join(TCB* handle);//greska
     void join(TCB** handle);
 
+
+    Sem* joinMe;
 
     friend class Riscv;
 

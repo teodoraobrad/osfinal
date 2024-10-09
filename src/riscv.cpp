@@ -77,6 +77,7 @@ void Riscv::handleSupervisorTrap() {
                     break;
                 case THREAD_EXIT: {
                     TCB::running->setFinished();
+                    TCB::running->joinMe->signal();
                     TCB::yield();
                     w_a0(1);
                 }
