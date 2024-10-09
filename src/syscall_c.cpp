@@ -188,8 +188,25 @@ void sync(){
 
     abi_invoke();
 }
+/*
+void thread_join(thread_t* handle)
+{
+    if (!handle) { return ; }
+
+    Riscv::w_a1((uint64) handle);
+    Riscv::w_a0(THREAD_JOIN);
+
+    abi_invoke();
+}
+*/
+void thread_join(thread_t* handle){
 
 
+    Riscv::w_a1((uint64) handle);
+    Riscv::w_a0(THREAD_JOIN_D);
+
+    abi_invoke();
+}
 
 
 

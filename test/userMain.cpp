@@ -120,11 +120,25 @@ void userMain() {
             printString("TEST 8 (modifikacija)\n");
 #endif
             break;
-        case 9:
+ /*       case 9:
 #if MOD_IMPELENTED == 1
             bariera();
             printString("Modifikacija bariera uspesno zavrsena\n");
             printString("TEST 9 (modifikacija)\n");
+#endif
+            break;
+        case 9:
+#if MOD_IMPELENTED == 1
+            dodatna();
+            printString("Modifikacija dodatna join uspesno zavrsena\n");
+            printString("TEST 10 (modifikacija join)\n");
+#endif
+            break;*/
+        case 9:
+#if MOD_IMPELENTED == 1
+            d();
+            printString("Modifikacija  join uspesno zavrsena\n");
+            printString("TEST 10 (modifikacija join)\n");
 #endif
             break;
         default:

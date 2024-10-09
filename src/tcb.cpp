@@ -100,3 +100,17 @@ void TCB::setpar(TCB* a){
     this->par=a;
     this->semPar=new Sem(0);
 }
+/*
+void TCB::join(thread_t* handle)
+{
+    while(!(*handle)->isFinished())
+        TCB::yield();
+}*/
+
+void TCB::join(TCB* *handle) {
+    if((*handle)!= nullptr){
+        while((*handle)->isFinished()!=true){
+            TCB::yield();
+        }
+    }
+}

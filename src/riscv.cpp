@@ -181,6 +181,25 @@ void Riscv::handleSupervisorTrap() {
 
                 }
                     break;
+ /*               case THREAD_JOIN: {
+//join
+                    TCB** volatile a1reg = (TCB**) r_a1fromstack();
+
+                    TCB::join(a1reg);
+
+
+                }
+                    break;*/
+                case THREAD_JOIN_D: {
+
+                    uint64 volatile a1reg = (uint64) r_a1fromstack();
+
+                    TCB::running->join((TCB**)a1reg);
+
+
+                }
+                    break;
+
 
                 default: {
                     printString("Prosledjen code za syscall koji nije na listi za obradu.\n");

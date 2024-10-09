@@ -4,5 +4,7 @@
 
 void bariera();
 void modifikacija();
+void dodatna();
+void d();
 
 #endif //OSFINAL_MOD_HPP

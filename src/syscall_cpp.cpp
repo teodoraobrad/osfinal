@@ -84,6 +84,16 @@ void Thread::pair(Thread* t1, Thread* t2){
 void Thread::synchronize(){
     sync();
 }
+// mod dodatna
+/*void Thread::join()
+{
+    if (myHandle)
+        thread_join(&myHandle);
+}*/
+void Thread::join(){
+    //if(myHandle!= nullptr)
+    thread_join(&myHandle);
+}
 
 
 

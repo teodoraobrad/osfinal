@@ -35,6 +35,8 @@ public:
     static void pair(Thread* t1, Thread* t2);
     void synchronize();
 
+    void join();
+
 protected:
     Thread();
 

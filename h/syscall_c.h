@@ -41,7 +41,10 @@ void modifikacijaFunk();//0x08
 //modifikacija sept
 void pair(thread_t t1, thread_t t2);
 void sync();
+//void thread_join(thread_t* handle);//0x14
 
+//void modifikacijaFunk();
+void thread_join(thread_t* handle);//0x15
 
 int sem_timedwait(
         sem_t id,

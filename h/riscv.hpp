@@ -35,6 +35,8 @@
 #define BARIERA 0x07
 #define MODIFIKACIJA 0x08
 #define MODIFIKACIJA1 0x09
+#define THREAD_JOIN 0x14
+#define THREAD_JOIN_D 0x15
 
 #define CONSOLE 0xa
 

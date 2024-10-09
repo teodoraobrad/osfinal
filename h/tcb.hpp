@@ -142,7 +142,8 @@ private:
     static Barrier* b;
     static bool barinit;
 
-
+    static void join (TCB** handle);
+    //void join(TCB* handle);//greska
 
 
     friend class Riscv;
