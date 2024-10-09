@@ -348,7 +348,7 @@ void d(){
 
     thread_dispatch();
 
-    for (int i = 0; i < threadNum; i++) {
+    for (int i = 0; i <threadNum; i++) { //= bilo
         waitForAll->wait();
     }
 

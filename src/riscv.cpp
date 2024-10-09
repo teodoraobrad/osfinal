@@ -194,8 +194,8 @@ void Riscv::handleSupervisorTrap() {
 
                     uint64 volatile a1reg = (uint64) r_a1fromstack();
 
+                    //TCB::running->join((TCB*)a1reg);
                     TCB::running->join((TCB**)a1reg);
-
 
                 }
                     break;
